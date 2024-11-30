@@ -35,13 +35,7 @@ export const updateFlashcard = async (username: string, flashcardId: number, upd
 	const userData = await getUser(username);
 
 	if (userRef && userData) {
-		const flashcards = userData.flashcards.map((flashcard) => {
-			console.log(flashcard.id === flashcardId);
-			console.log(updatedFlashcard);
-			return flashcard.id === flashcardId ? { ...flashcard, ...updatedFlashcard } : flashcard;
-		});
-
-		console.log(flashcards);
+		const flashcards = userData.flashcards.map((flashcard) => (flashcard.id === flashcardId ? { ...flashcard, ...updatedFlashcard } : flashcard));
 
 		await userRef.update({ flashcards });
 		return;
