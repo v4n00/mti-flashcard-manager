@@ -5,7 +5,7 @@ import { userTokenExpiration } from '../config/const';
 import { RequestWithToken } from '../models/requests';
 import { User } from '../models/user';
 
-export const verifyToken = (req: RequestWithToken, res: Response, next: NextFunction) => {
+export const verifyToken = (req: RequestWithToken, res: Response, next: NextFunction): void => {
 	// check if header has authorization field
 	const authHeader = req.headers.authorization;
 	if (!authHeader) {
