@@ -72,6 +72,6 @@
 		height: calc(100vh - 5rem);
 	}
 	h1 {
-		@apply whitespace-pre-wrap md:text-6xl text-5xl font-extrabold text-center m-10;
+		@apply whitespace-pre-wrap md:text-6xl text-5xl font-extrabold text-center p-10;
 	}
 }

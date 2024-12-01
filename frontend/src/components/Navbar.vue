@@ -1,9 +1,25 @@
+<script setup lang="ts">
+import { CreditCard } from 'lucide-vue-next';
+import AccountButton from './AccountButton.vue';
+import GitHubButton from './GitHubButton.vue';
+import ThemeButton from './ThemeButton.vue';
+import Button from './ui/button/Button.vue';
+</script>
+
 <template>
-	<header className="bg-background sticky z-20 flex h-20 items-center px-6 border-b-2 top-0">
+	<header class="bg-background sticky z-20 h-20 px-6 border-b-2 top-0 flex items-center justify-between">
 		<div>
-			<RouterLink to="/"> Home </RouterLink>
+			<RouterLink to="/">
+				<Button variant="outline">
+					<CreditCard />
+					Flashcardio
+				</Button>
+			</RouterLink>
+		</div>
+		<div class="flex flex-row gap-2">
+			<AccountButton />
+			<GitHubButton />
+			<ThemeButton />
 		</div>
 	</header>
 </template>
-
-<script setup lang="ts"></script>

@@ -1,16 +1,26 @@
 <script setup lang="ts">
-import Card from '../components/ui/card/Card.vue';
+import DisableCard from '@/components/DisableCard.vue';
+import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 </script>
 
 <template>
-	<div className="flex flex-col items-center">
-		<div className="flex flex-col items-center">
-			<h1 className="text-4xl font-bold mt-8">Flashcards</h1>
-			<div className="flex flex-col items-center mt-4">
-				<RouterLink to="/viewer" className="bg-primary text-white px-4 py-2 rounded-md mt-2">View Flashcards</RouterLink>
-				<RouterLink to="/manager" className="bg-primary text-white px-4 py-2 rounded-md">Manage Flashcard</RouterLink>
-			</div>
-			<Card>test</Card>
-		</div>
+	<h1>Flashcards</h1>
+	<div class="flex justify-center flex-col items-center gap-6">
+		<DisableCard :disabled="false" to="/view">
+			<template #default>
+				<CardHeader>
+					<CardTitle class="text-center">Flashcards</CardTitle>
+					<CardDescription> Shuffle through your flashcards </CardDescription>
+				</CardHeader>
+			</template>
+		</DisableCard>
+		<DisableCard :disabled="true" to="/manage">
+			<template #default>
+				<CardHeader>
+					<CardTitle class="text-center">Manage</CardTitle>
+					<CardDescription> Create, update or delete flashcards </CardDescription>
+				</CardHeader>
+			</template>
+		</DisableCard>
 	</div>
 </template>

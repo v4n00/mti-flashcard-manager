@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Toaster from '@/components/ui/toast/Toaster.vue';
 import Navbar from './components/Navbar.vue';
 </script>
 
@@ -7,4 +8,5 @@ import Navbar from './components/Navbar.vue';
 	<main>
 		<RouterView />
 	</main>
+	<Toaster />
 </template>
