@@ -7,7 +7,6 @@
 
 <script setup>
 import { AlertTriangle } from 'lucide-vue-next';
-import { defineProps } from 'vue';
 
 const props = defineProps({
 	message: {

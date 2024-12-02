@@ -7,7 +7,6 @@
 
 <script setup>
 import { CheckCircle } from 'lucide-vue-next';
-import { defineProps } from 'vue';
 
 const props = defineProps({
 	message: {
