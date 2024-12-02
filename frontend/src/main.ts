@@ -12,20 +12,26 @@ const router = createRouter({
 	history: createWebHistory(),
 	routes: [
 		{ path: '/', component: FlashcardsDashboard },
-		{ path: '/view', component: FlashcardsViewer, meta: { requiresAuth: true } },
-		{ path: '/manage', component: FlashcardsManager, meta: { requiresAuth: true } },
+		{ path: '/view', component: FlashcardsViewer, meta: { requiresAuth: true, title: 'Viewer' } },
+		{ path: '/manage', component: FlashcardsManager, meta: { requiresAuth: true, title: 'Manager' } },
 
-		{ path: '/:pathMatch(.*)*', component: PageMessage, props: { message: 'Page not found', number: 404 } },
-		{ path: '/unauthorized', name: 'NotAuthorized', component: PageMessage, props: { message: 'Not authorized', number: 403 } },
+		{ path: '/:pathMatch(.*)*', component: PageMessage, props: { message: 'Page not found', code: 404 }, meta: { title: 'Not Found' } },
+		{ path: '/unauthorized', name: 'NotAuthorized', component: PageMessage, props: { message: 'Not authorized', code: 403 }, meta: { title: 'Not Authorized' } },
 	],
 });
 
 router.beforeEach(async (to, _from, next) => {
-	const isAuthenticated = store.getters['auth/isAuthenticated'];
+	const { title } = to.meta;
+	const defaultTitle = 'Flashcardio';
+
+	document.title = `${defaultTitle}${title ? ` - ${title}` : ''}`;
+
+	let isAuthenticated = store.getters['auth/isAuthenticated'];
 	if (!isAuthenticated) {
 		await store.dispatch('auth/validateToken');
 	}
 
+	isAuthenticated = store.getters['auth/isAuthenticated'];
 	if (to.meta.requiresAuth && !isAuthenticated) {
 		next({ name: 'NotAuthorized' });
 	} else {
