@@ -1,11 +1,11 @@
 <template>
-	<div class="w-full flex">
+	<div class="w-full flex items-center">
 		<Info class="mr-2" />
 		{{ message }}
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Info } from 'lucide-vue-next';
 
 const props = defineProps({

@@ -1,4 +1,4 @@
-import { login, signUp, validate } from '@/api/authApi';
+import { callLogin, callSignUp, callValidate } from '@/api/authApi';
 import { createStore } from 'vuex';
 
 export const store = createStore({
@@ -21,7 +21,7 @@ export const store = createStore({
 				async login({ commit }, { username, password }) {
 					commit('setLoading', true);
 					try {
-						const { data } = await login({ username, password });
+						const { data } = await callLogin({ username, password });
 						localStorage.setItem('token', data.token);
 						commit('setUsername', data.username);
 					} finally {
@@ -31,7 +31,7 @@ export const store = createStore({
 				async signUp({ commit }, { username, password, confirmPassword }) {
 					commit('setLoading', true);
 					try {
-						await signUp({ username, password, confirmPassword });
+						await callSignUp({ username, password, confirmPassword });
 					} finally {
 						commit('setLoading', false);
 					}
@@ -44,7 +44,7 @@ export const store = createStore({
 					const token = localStorage.getItem('token');
 					if (token) {
 						try {
-							const { data } = await validate({ token });
+							const { data } = await callValidate({ token });
 							commit('setUsername', data.username);
 						} catch {
 							localStorage.removeItem('token');
@@ -67,3 +67,19 @@ export const store = createStore({
 		},
 	},
 });
+
+export const login = async ({ username, password }: { username: string; password: string }) => {
+	await store.dispatch('auth/login', { username, password });
+};
+
+export const signUp = async ({ username, password, confirmPassword }: { username: string; password: string; confirmPassword: string }) => {
+	await store.dispatch('auth/signUp', { username, password, confirmPassword });
+};
+
+export const logOut = async () => {
+	await store.dispatch('auth/logOut');
+};
+
+export const validateToken = async () => {
+	await store.dispatch('auth/validateToken');
+};

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CreditCard } from 'lucide-vue-next';
-import AccountButton from './AccountButton.vue';
+import AccountButton from './auth/AccountButton.vue';
 import GitHubButton from './GitHubButton.vue';
 import ThemeButton from './ThemeButton.vue';
 import Button from './ui/button/Button.vue';

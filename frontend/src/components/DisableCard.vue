@@ -9,7 +9,7 @@
 	</RouterLink>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Card from '@/components/ui/card/Card.vue';
 import { warningToast } from '@/components/ui/toast/custom-toast';
 import { Lock } from 'lucide-vue-next';
