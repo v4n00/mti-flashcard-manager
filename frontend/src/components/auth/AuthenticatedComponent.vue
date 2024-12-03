@@ -8,7 +8,7 @@ import { Button } from '../ui/button';
 import { successToast } from '../ui/toast/custom-toast';
 
 const store = useStore();
-const username = computed(() => store.state.auth.username);
+const username = computed(() => store.state.auth.user.username);
 
 const handleLogOut = async () => {
 	await logOut();

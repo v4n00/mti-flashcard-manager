@@ -1,3 +1,4 @@
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
@@ -39,4 +40,4 @@ router.beforeEach(async (to, _from, next) => {
 	}
 });
 
-createApp(App).use(router).use(store).mount('#app');
+createApp(App).use(router).use(store).use(VueQueryPlugin).mount('#app');

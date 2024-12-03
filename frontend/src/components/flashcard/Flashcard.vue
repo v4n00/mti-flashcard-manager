@@ -15,11 +15,9 @@ defineProps({
 });
 
 const flipped = ref(false);
-const cardRef = ref<HTMLDivElement | null>(null);
 
 const toggleFlip = () => {
 	flipped.value = !flipped.value;
-	cardRef.value?.focus();
 };
 
 const setFlipped = (value: boolean) => {
@@ -36,7 +34,7 @@ const handleLength = (style: string, text: string) => {
 
 <template>
 	<div class="p-4 [perspective:1000px] w-full h-full">
-		<Card :class="['w-full h-full relative transition-all duration-500 cursor-pointer [transform-style:preserve-3d]', flipped ? '[transform:rotateX(180deg)]' : '']" @click="toggleFlip" @blur="setFlipped(false)" tabindex="0" ref="cardRef">
+		<Card :class="['w-full h-full relative transition-all duration-500 cursor-pointer [transform-style:preserve-3d]', flipped ? '[transform:rotateX(180deg)]' : '']" @click="toggleFlip" @blur="setFlipped(false)" tabindex="0">
 			<ScrollArea v-if="frontSide.length > 400" :class="handleLength('w-full h-full top-1/2 left-1/2 absolute text-center select-none [transform:translate(-50%,-50%)] [backface-visibility:hidden]', frontSide)">
 				{{ frontSide }}
 			</ScrollArea>

@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { FlashcardType } from '@/interfaces/interfaces';
+import { FlashcardType } from '@/config/interfaces';
 import { Loader2, Shuffle } from 'lucide-vue-next';
 import { defineProps, ref, watch } from 'vue';
 import Button from '../ui/button/Button.vue';
+import { Card } from '../ui/card';
 import Flashcard from './Flashcard.vue';
 
 const props = defineProps({
 	flashcards: {
-		type: Array<FlashcardType>,
+		type: [Array<FlashcardType>, null],
 		required: true,
 	},
 });
@@ -31,25 +32,36 @@ const shuffleOrder = () => {
 		loading.value = false;
 	}, 400);
 };
-console.log(flashcardsArray);
 </script>
 
 <template>
 	<div class="flex flex-col gap-y-5 items-center w-full">
 		<Carousel :opts="{ loop: true }">
 			<CarouselContent class="max-w-[500px] w-screen h-[400px]">
-				<template v-if="flashcardsArray !== undefined">
+				<template v-if="flashcardsArray !== null">
 					<template v-if="flashcardsArray.length > 0">
 						<CarouselItem v-for="flashcard in flashcardsArray" :key="flashcard.id">
 							<Flashcard :frontSide="flashcard.frontSide" :backSide="flashcard.backSide" />
 						</CarouselItem>
 					</template>
 					<template v-else>
-						<div>No flashcards available</div>
+						<CarouselItem>
+							<div class="p-4 w-full h-full">
+								<Card class="p-4 w-full h-full rounded-xl flex items-center justify-center border-2">
+									<p>No flashcards found</p>
+								</Card>
+							</div>
+						</CarouselItem>
 					</template>
 				</template>
 				<template v-else>
-					<Loader2 class="animate-spin" />
+					<CarouselItem>
+						<div class="p-4 w-full h-full">
+							<Card class="p-4 w-full h-full rounded-xl flex items-center justify-center border-2">
+								<Loader2 class="animate-spin" />
+							</Card>
+						</div>
+					</CarouselItem>
 				</template>
 			</CarouselContent>
 			<CarouselPrevious />

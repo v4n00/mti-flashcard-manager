@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
-const username = computed(() => store.state.auth.username);
+const user = computed(() => store.state.auth.user);
 
 const cards = [
 	{
@@ -24,7 +24,7 @@ const cards = [
 <template>
 	<h1>Flashcards</h1>
 	<div class="flex justify-center flex-col items-center gap-6">
-		<DisableCard v-for="card in cards" :key="card.to" :disabled="!username" :to="card.to" class="w-full px-10 sm:w-3/4 md:w-4/6 lg:w-1/2 xl:w-1/3">
+		<DisableCard v-for="card in cards" :key="card.to" :disabled="!user" :to="card.to" class="w-full px-10 sm:w-3/4 md:w-4/6 lg:w-1/2 xl:w-1/3">
 			<template #default>
 				<CardHeader class="text-center">
 					<CardTitle>{{ card.title }}</CardTitle>

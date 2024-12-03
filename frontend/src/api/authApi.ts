@@ -1,5 +1,5 @@
+import { APIURL } from '@/config/const';
 import axios from 'axios';
-const APIURL = 'http://localhost:3000';
 
 export const callLogin = async ({ username, password }: { username: string; password: string }) => {
 	return await axios.post(`${APIURL}/user/login`, { username, password });

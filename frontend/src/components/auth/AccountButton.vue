@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { CircleUser } from 'lucide-vue-next';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
@@ -8,7 +8,7 @@ import NotAuthenticatedComponent from '../auth/NotAuthenticatedComponent.vue';
 import Button from '../ui/button/Button.vue';
 
 const store = useStore();
-const username = computed(() => store.state.auth.username);
+const user = computed(() => store.state.auth.user);
 </script>
 
 <template>
@@ -20,7 +20,8 @@ const username = computed(() => store.state.auth.username);
 		</DialogTrigger>
 		<DialogContent class="w-[400px]">
 			<DialogTitle class="text-3xl m-0">Account</DialogTitle>
-			<AuthenticatedComponent v-if="username" />
+			<DialogDescription>Shuffle and create your flashcards!</DialogDescription>
+			<AuthenticatedComponent v-if="user" />
 			<NotAuthenticatedComponent v-else />
 		</DialogContent>
 	</Dialog>

@@ -6,12 +6,12 @@ export const store = createStore({
 		auth: {
 			namespaced: true,
 			state: {
-				username: null,
+				user: null,
 				loading: false,
 			},
 			mutations: {
-				setUsername(state, username) {
-					state.username = username;
+				setUser(state, user) {
+					state.user = user;
 				},
 				setLoading(state, isLoading) {
 					state.loading = isLoading;
@@ -23,7 +23,7 @@ export const store = createStore({
 					try {
 						const { data } = await callLogin({ username, password });
 						localStorage.setItem('token', data.token);
-						commit('setUsername', data.username);
+						commit('setUser', data);
 					} finally {
 						commit('setLoading', false);
 					}
@@ -38,27 +38,27 @@ export const store = createStore({
 				},
 				logOut({ commit }) {
 					localStorage.removeItem('token');
-					commit('setUsername', null);
+					commit('setUser', null);
 				},
 				async validateToken({ commit }) {
 					const token = localStorage.getItem('token');
 					if (token) {
 						try {
 							const { data } = await callValidate({ token });
-							commit('setUsername', data.username);
+							commit('setUser', data);
 						} catch {
 							localStorage.removeItem('token');
-							commit('setUsername', null);
+							commit('setUser', null);
 						}
 					}
 				},
 			},
 			getters: {
 				isAuthenticated(state) {
-					return !!state.username;
+					return !!state.user;
 				},
-				username(state) {
-					return state.username;
+				user(state) {
+					return state.user;
 				},
 				loading(state) {
 					return state.loading;
