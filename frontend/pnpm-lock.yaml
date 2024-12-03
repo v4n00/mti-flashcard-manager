@@ -23,6 +23,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      embla-carousel-vue:
+        specifier: ^8.5.1
+        version: 8.5.1(vue@3.5.13(typescript@5.6.3))
       lucide-vue:
         specifier: ^0.462.0
         version: 0.462.0(vue@3.5.13(typescript@5.6.3))
@@ -645,6 +648,19 @@ packages:
 
   electron-to-chromium@1.5.67:
     resolution: {integrity: sha512-nz88NNBsD7kQSAGGJyp8hS6xSPtWwqNogA0mjtc2nUYeEf3nURK9qpV18TuBdDmEDgVWotS8Wkzf+V52dSQ/LQ==}
+
+  embla-carousel-reactive-utils@8.5.1:
+    resolution: {integrity: sha512-n7VSoGIiiDIc4MfXF3ZRTO59KDp820QDuyBDGlt5/65+lumPHxX2JLz0EZ23hZ4eg4vZGUXwMkYv02fw2JVo/A==}
+    peerDependencies:
+      embla-carousel: 8.5.1
+
+  embla-carousel-vue@8.5.1:
+    resolution: {integrity: sha512-DdWsmiketOzAn6D42A3AQmJ/nndt4ryjBX/RMupl97gJf6oIec5q8Sc3cKuRhCXlLE0RZ7jz3ZlHW7xrT+BJDg==}
+    peerDependencies:
+      vue: ^3.2.37
+
+  embla-carousel@8.5.1:
+    resolution: {integrity: sha512-JUb5+FOHobSiWQ2EJNaueCNT/cQU9L6XWBbWmorWPQT9bkbk+fhsuLr8wWrzXKagO3oWszBO7MSx+GfaRk4E6A==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1695,6 +1711,18 @@ snapshots:
   eastasianwidth@0.2.0: {}
 
   electron-to-chromium@1.5.67: {}
+
+  embla-carousel-reactive-utils@8.5.1(embla-carousel@8.5.1):
+    dependencies:
+      embla-carousel: 8.5.1
+
+  embla-carousel-vue@8.5.1(vue@3.5.13(typescript@5.6.3)):
+    dependencies:
+      embla-carousel: 8.5.1
+      embla-carousel-reactive-utils: 8.5.1(embla-carousel@8.5.1)
+      vue: 3.5.13(typescript@5.6.3)
+
+  embla-carousel@8.5.1: {}
 
   emoji-regex@8.0.0: {}
 
