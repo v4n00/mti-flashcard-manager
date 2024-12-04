@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { login } from '@/store/auth';
 import { toTypedSchema } from '@vee-validate/zod';
 import { AxiosError } from 'axios';
 import { computed } from 'vue';
@@ -20,7 +19,7 @@ const formSchema = toTypedSchema(
 
 const onSubmit = async (values: any) => {
 	try {
-		await login(values);
+		await store.dispatch('auth/login', { username: values.username, password: values.password });
 		successToast('Logged in successfully');
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {

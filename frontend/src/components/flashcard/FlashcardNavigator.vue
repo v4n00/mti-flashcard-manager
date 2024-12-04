@@ -9,19 +9,26 @@ import Flashcard from './Flashcard.vue';
 
 const props = defineProps({
 	flashcards: {
-		type: [Array<FlashcardType>, null],
+		type: Array<FlashcardType>,
+		required: true,
+	},
+	loading: {
+		type: Boolean,
 		required: true,
 	},
 });
 
+console.log(props.loading);
+
 watch(
-	() => props.flashcards,
-	(newFlashcards) => {
+	() => [props.flashcards, props.loading] as const,
+	([newFlashcards, newLoading]) => {
 		flashcardsArray.value = newFlashcards;
+		loading.value = newLoading;
 	}
 );
 
-const flashcardsArray = ref(props.flashcards);
+const flashcardsArray = ref<Array<FlashcardType>>(props.flashcards);
 const loading = ref(false);
 
 const shuffleOrder = () => {
@@ -38,29 +45,23 @@ const shuffleOrder = () => {
 	<div class="flex flex-col gap-y-5 items-center w-full">
 		<Carousel :opts="{ loop: true }">
 			<CarouselContent class="max-w-[500px] w-screen h-[400px]">
-				<template v-if="flashcardsArray !== null">
-					<template v-if="flashcardsArray.length > 0">
-						<CarouselItem v-for="flashcard in flashcardsArray" :key="flashcard.id">
-							<Flashcard :frontSide="flashcard.frontSide" :backSide="flashcard.backSide" />
-						</CarouselItem>
-					</template>
-					<template v-else>
-						<CarouselItem>
-							<div class="p-4 w-full h-full">
-								<Card class="p-4 w-full h-full rounded-xl flex items-center justify-center border-2">
-									<p>No flashcards found</p>
-								</Card>
-							</div>
-						</CarouselItem>
-					</template>
-				</template>
-				<template v-else>
+				<template v-if="loading || flashcardsArray.length == 0">
 					<CarouselItem>
 						<div class="p-4 w-full h-full">
 							<Card class="p-4 w-full h-full rounded-xl flex items-center justify-center border-2">
-								<Loader2 class="animate-spin" />
+								<template v-if="loading">
+									<Loader2 class="animate-spin" />
+								</template>
+								<template v-else>
+									<p>No flashcards found</p>
+								</template>
 							</Card>
 						</div>
+					</CarouselItem>
+				</template>
+				<template v-else>
+					<CarouselItem v-for="flashcard in flashcardsArray" :key="flashcard.id">
+						<Flashcard :frontSide="flashcard.frontSide" :backSide="flashcard.backSide" />
 					</CarouselItem>
 				</template>
 			</CarouselContent>

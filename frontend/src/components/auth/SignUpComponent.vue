@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { signUp } from '@/store/auth';
 import { toTypedSchema } from '@vee-validate/zod';
 import { AxiosError } from 'axios';
 import { computed } from 'vue';
@@ -26,7 +25,7 @@ const formSchema = toTypedSchema(
 
 const onSubmit = async (values: any) => {
 	try {
-		await signUp(values);
+		store.dispatch('auth/signUp', { username: values.username, password: values.password, confirmPassword: values.confirmPassword });
 		successToast('Signed up successfully');
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {

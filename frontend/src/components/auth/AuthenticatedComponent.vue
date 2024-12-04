@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { DialogFooter, DialogHeader } from '@/components/ui/dialog';
-import { logOut } from '@/store/auth';
+import router from '@/modules/router';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { Button } from '../ui/button';
@@ -11,8 +11,9 @@ const store = useStore();
 const username = computed(() => store.state.auth.user.username);
 
 const handleLogOut = async () => {
-	await logOut();
+	await store.dispatch('auth/logOut');
 	successToast('Logged out successfully');
+	router.replace('/');
 };
 </script>
 
