@@ -16,7 +16,7 @@ export const getFlashcardById = async (username: string, flashcardId: number): P
 	} else return null;
 };
 
-export const createFlashcard = async (username: string, { frontSide, backSide }: { frontSide: string; backSide: string }): Promise<void> => {
+export const createFlashcard = async (username: string, { frontSide, backSide }: { frontSide: string; backSide: string }): Promise<Flashcard> => {
 	const userRef = await getUserRef(username);
 	const userData = await getUser(username);
 
@@ -26,19 +26,25 @@ export const createFlashcard = async (username: string, { frontSide, backSide }:
 			total: admin.firestore.FieldValue.increment(1),
 			flashcards: admin.firestore.FieldValue.arrayUnion(flashcard),
 		});
-		return;
+		return flashcard;
 	} else throw new Error('User not found');
 };
 
-export const updateFlashcard = async (username: string, flashcardId: number, updatedFlashcard: Partial<Flashcard>): Promise<void> => {
+export const updateFlashcard = async (username: string, flashcardId: number, updatedFlashcard: Partial<Flashcard>): Promise<Flashcard> => {
 	const userRef = await getUserRef(username);
 	const userData = await getUser(username);
 
 	if (userRef && userData) {
-		const flashcards = userData.flashcards.map((flashcard) => (flashcard.id === flashcardId ? { ...flashcard, ...updatedFlashcard } : flashcard));
+		const newFlashcard = await getFlashcardById(username, flashcardId);
+		if (!newFlashcard) throw new Error('Flashcard not found');
+
+		newFlashcard.frontSide = updatedFlashcard.frontSide || newFlashcard.frontSide;
+		newFlashcard.backSide = updatedFlashcard.backSide || newFlashcard.backSide;
+
+		const flashcards = userData.flashcards.map((flashcard) => (flashcard.id === flashcardId ? newFlashcard : flashcard));
 
 		await userRef.update({ flashcards });
-		return;
+		return newFlashcard;
 	} else throw new Error('User not found');
 };
 

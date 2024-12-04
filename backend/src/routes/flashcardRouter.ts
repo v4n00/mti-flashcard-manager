@@ -34,9 +34,9 @@ flashcardRouter.route('/flashcards').post(verifyToken, async (req, res) => {
 
 	try {
 		const username = ((req as RequestWithToken).decodedToken as JwtPayload).username;
-		await createFlashcard(username, { frontSide, backSide });
+		const flashcard = await createFlashcard(username, { frontSide, backSide });
 
-		res.status(201).json('Flashcard created');
+		res.status(201).json(flashcard);
 		return;
 	} catch (e) {
 		res.status(500).json('Internal Server Error');
@@ -55,8 +55,8 @@ flashcardRouter.route('/flashcards/:id').patch(verifyToken, async (req, res) => 
 	}
 
 	try {
-		await updateFlashcard(username, id, updateData);
-		res.status(200).json('Flashcard updated');
+		const flashcard = await updateFlashcard(username, id, updateData);
+		res.status(200).json(flashcard);
 		return;
 	} catch (e) {
 		res.status(500).json('Internal Server Error');
