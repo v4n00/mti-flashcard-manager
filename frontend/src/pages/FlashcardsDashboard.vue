@@ -22,7 +22,7 @@ const cards = [
 </script>
 
 <template>
-	<h1>Flashcards</h1>
+	<h1>Flashcardio</h1>
 	<div class="flex justify-center flex-col items-center gap-6">
 		<DisableCard v-for="card in cards" :key="card.to" :disabled="!user" :to="card.to" class="w-full px-10 sm:w-3/4 md:w-4/6 lg:w-1/2 xl:w-1/3">
 			<template #default>

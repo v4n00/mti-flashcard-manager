@@ -64,7 +64,7 @@ const onDelete = async () => {
 </script>
 
 <template>
-	<form @submit="onSubmit">
+	<form @submit="onSubmit" class="w-full">
 		<Card class="w-full h-[100px] flex flex-row justify-start items-center gap-2 mb-2">
 			<FormField v-slot="{ componentField }" name="id">
 				<FormItem>

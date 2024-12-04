@@ -71,6 +71,9 @@
 	* {
 		@apply border-border;
 	}
+	main {
+		height: calc(100vh - 5rem);
+	}
 	body {
 		@apply bg-background text-foreground h-full;
 	}

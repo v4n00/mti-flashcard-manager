@@ -21,7 +21,7 @@ router.beforeEach(async (to, _from, next) => {
 	const { title } = to.meta;
 	const defaultTitle = 'Flashcardio';
 
-	document.title = `${defaultTitle}${title ? ` - ${title}` : ''}`;
+	document.title = `${title ? `${title} - ` : ''}${defaultTitle}`;
 
 	let isAuthenticated = store.getters['auth/isAuthenticated'];
 	if (!isAuthenticated) {
