@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FlashcardEditor from '@/components/flashcard/FlashcardEditor.vue';
 import Input from '@/components/ui/input/Input.vue';
 import ScrollArea from '@/components/ui/scroll-area/ScrollArea.vue';
 import { FlashcardType } from '@/config/interfaces';
@@ -34,17 +35,13 @@ onMounted(() => {
 </script>
 
 <template>
-	<div className="h-full flex flex-col items-center w-full">
+	<div class="h-full flex flex-col items-center w-full">
 		<h1>Manage flashcards</h1>
-		<div className="flex flex-col justify-between items-center gap-5 h-full px-2">
-			<!-- flashcard editor -->
+		<div class="flex flex-col justify-between items-center gap-5 h-full px-2">
+			<FlashcardEditor />
 			<Input v-model="searchInput" placeholder="Search..." />
-			<div v-for="flashcard in flashcards" :key="flashcard.id">
-				<p>{{ flashcard.frontSide }}</p>
-				<p>{{ flashcard.backSide }}</p>
-			</div>
-			<ScrollArea className="mb-5 h-0 grow border rounded-lg px-5 py-2 gap-y-5 w-full">
-				<!-- flashcard editor -->
+			<ScrollArea class="mb-5 h-full grow border rounded-lg px-5 py-2 gap-y-5 w-full">
+				<FlashcardEditor v-for="flashcard in flashcards" :key="flashcard.id" :flashcard="flashcard" />
 			</ScrollArea>
 		</div>
 	</div>
