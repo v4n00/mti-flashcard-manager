@@ -1,13 +1,36 @@
 <script setup lang="ts">
 import Input from '@/components/ui/input/Input.vue';
+import ScrollArea from '@/components/ui/scroll-area/ScrollArea.vue';
 import { FlashcardType } from '@/config/interfaces';
-import { ref } from 'vue';
-import { useStore } from 'vuex';
+import { onMounted, ref, watch } from 'vue';
+import { useStore } from '../modules/store';
 
 const store = useStore();
 
-const flashcards = ref<FlashcardType[]>([]);
+const flashcards = ref<Array<FlashcardType>>(store.state.flashcards.flashcards);
+const loading = ref<boolean>(store.state.flashcards.loading);
+
+watch(
+	() => [store.state.flashcards.flashcards, store.state.flashcards.loading] as const,
+	([newFlashcards, newLoading]) => {
+		flashcards.value = newFlashcards;
+		loading.value = newLoading;
+	}
+);
+
 const searchInput = ref('');
+
+watch([searchInput], ([newSearchInput]) => {
+	if (flashcards.value) {
+		flashcards.value = store.state.flashcards.flashcards.filter((flashcard: FlashcardType) => {
+			return flashcard.frontSide.toLowerCase().includes(newSearchInput.toLowerCase()) || flashcard.backSide.toLowerCase().includes(newSearchInput.toLowerCase());
+		});
+	}
+});
+
+onMounted(() => {
+	store.dispatch('flashcards/fetchFlashcards');
+});
 </script>
 
 <template>

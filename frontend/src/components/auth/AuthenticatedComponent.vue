@@ -3,12 +3,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { DialogFooter, DialogHeader } from '@/components/ui/dialog';
 import router from '@/modules/router';
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+import { useStore } from '../../modules/store';
 import { Button } from '../ui/button';
 import { successToast } from '../ui/toast/custom-toast';
 
 const store = useStore();
-const username = computed(() => store.state.auth.user.username);
+const username = computed(() => (store.state.auth.user ? store.state.auth.user.username : ''));
 
 const handleLogOut = async () => {
 	await store.dispatch('auth/logOut');

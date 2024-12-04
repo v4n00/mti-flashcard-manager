@@ -3,8 +3,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { toTypedSchema } from '@vee-validate/zod';
 import { AxiosError } from 'axios';
 import { computed } from 'vue';
-import { useStore } from 'vuex';
 import * as z from 'zod';
+import { useStore } from '../../modules/store';
 import LoadingButton from '../ui/button/LoadingButton.vue';
 import { Card, CardContent } from '../ui/card';
 import { Input } from '../ui/input';

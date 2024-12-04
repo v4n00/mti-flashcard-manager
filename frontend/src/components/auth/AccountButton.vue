@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { CircleUser } from 'lucide-vue-next';
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+import { useStore } from '../../modules/store';
 import AuthenticatedComponent from '../auth/AuthenticatedComponent.vue';
 import NotAuthenticatedComponent from '../auth/NotAuthenticatedComponent.vue';
 import Button from '../ui/button/Button.vue';

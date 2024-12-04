@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FlashcardNavigator from '@/components/flashcard/FlashcardNavigator.vue';
 import { onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { useStore } from '../modules/store';
 
 const store = useStore();
 

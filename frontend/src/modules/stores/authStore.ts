@@ -8,11 +8,6 @@ export interface AuthState {
 	loading: boolean;
 }
 
-export interface LoginType {
-	username: string;
-	password: string;
-}
-
 export const authModule: Module<AuthState, any> = {
 	namespaced: true,
 	state: (): AuthState => ({
@@ -28,7 +23,7 @@ export const authModule: Module<AuthState, any> = {
 		},
 	},
 	actions: {
-		async login({ commit }, { username, password }: LoginType) {
+		async login({ commit }, { username, password }) {
 			commit('setLoading', true);
 			try {
 				const { data } = await axios.post(`${APIURL}/user/login`, { username, password });

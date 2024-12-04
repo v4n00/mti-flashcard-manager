@@ -2,7 +2,7 @@
 import DisableCard from '@/components/DisableCard.vue';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+import { useStore } from '../modules/store';
 
 const store = useStore();
 const user = computed(() => store.state.auth.user);

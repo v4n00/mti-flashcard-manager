@@ -18,24 +18,22 @@ const props = defineProps({
 	},
 });
 
-console.log(props.loading);
+const flashcards = ref<Array<FlashcardType>>(props.flashcards);
+const loading = ref<boolean>(props.loading);
 
 watch(
 	() => [props.flashcards, props.loading] as const,
 	([newFlashcards, newLoading]) => {
-		flashcardsArray.value = newFlashcards;
+		flashcards.value = newFlashcards;
 		loading.value = newLoading;
 	}
 );
 
-const flashcardsArray = ref<Array<FlashcardType>>(props.flashcards);
-const loading = ref(false);
-
 const shuffleOrder = () => {
 	loading.value = true;
 	setTimeout(() => {
-		if (!flashcardsArray.value) return;
-		flashcardsArray.value.sort(() => Math.random() - 0.5);
+		if (!flashcards.value) return;
+		flashcards.value.sort(() => Math.random() - 0.5);
 		loading.value = false;
 	}, 400);
 };
@@ -45,7 +43,7 @@ const shuffleOrder = () => {
 	<div class="flex flex-col gap-y-5 items-center w-full">
 		<Carousel :opts="{ loop: true }">
 			<CarouselContent class="max-w-[500px] w-screen h-[400px]">
-				<template v-if="loading || flashcardsArray.length == 0">
+				<template v-if="loading || flashcards.length == 0">
 					<CarouselItem>
 						<div class="p-4 w-full h-full">
 							<Card class="p-4 w-full h-full rounded-xl flex items-center justify-center border-2">
@@ -60,7 +58,7 @@ const shuffleOrder = () => {
 					</CarouselItem>
 				</template>
 				<template v-else>
-					<CarouselItem v-for="flashcard in flashcardsArray" :key="flashcard.id">
+					<CarouselItem v-for="flashcard in flashcards" :key="flashcard.id">
 						<Flashcard :frontSide="flashcard.frontSide" :backSide="flashcard.backSide" />
 					</CarouselItem>
 				</template>
