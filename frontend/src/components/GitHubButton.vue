@@ -4,7 +4,7 @@ import Button from './ui/button/Button.vue';
 </script>
 
 <template>
-	<a href="https://github.com/v4n00/mti-flashcard-manager">
+	<a href="https://github.com/v4n00/mti-flashcard-manager" target="_blank">
 		<Button variant="outline" size="icon">
 			<Github />
 		</Button>

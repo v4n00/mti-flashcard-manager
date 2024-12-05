@@ -1,11 +1,13 @@
 import cors from 'cors';
 import express from 'express';
+import morgan from 'morgan';
 import config from './config/const';
 import flashcardRouter from './routes/flashcardRouter';
 import userRouter from './routes/userRouter';
 
 const app = express();
 app.use(express.json());
+app.use(morgan('combined'));
 app.use(
 	cors({
 		origin: config.clientAddress,

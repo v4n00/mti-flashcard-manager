@@ -25,7 +25,7 @@ const formSchema = toTypedSchema(
 
 const onSubmit = async (values: any) => {
 	try {
-		store.dispatch('auth/signUp', { username: values.username, password: values.password, confirmPassword: values.confirmPassword });
+		await store.dispatch('auth/signUp', { username: values.username, password: values.password, confirmPassword: values.confirmPassword });
 		successToast('Signed up successfully');
 	} catch (error) {
 		if (error instanceof AxiosError && error.response) {
