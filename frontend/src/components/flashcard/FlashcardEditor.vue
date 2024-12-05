@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FlashcardType } from '@/config/interfaces';
 import { toTypedSchema } from '@vee-validate/zod';
-import { Save, Trash } from 'lucide-vue-next';
+import { Loader2, Save, Trash } from 'lucide-vue-next';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import * as z from 'zod';
@@ -24,8 +24,8 @@ const form = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			id: z.number().optional(),
-			frontSide: z.string().min(1),
-			backSide: z.string().min(1),
+			frontSide: z.string(),
+			backSide: z.string(),
 		})
 	),
 	initialValues: {
@@ -37,8 +37,11 @@ const form = useForm({
 
 const store = useStore();
 const flashcard = ref({ ...props.flashcard });
+const loadingDelete = ref(false);
+const loadingSave = ref(false);
 
 const onSubmit = form.handleSubmit(async (values) => {
+	loadingSave.value = true;
 	if (values.id) {
 		if (flashcard.value.backSide === values.backSide && flashcard.value.frontSide === values.frontSide) {
 			errorToast('Error: No changes made');
@@ -46,13 +49,19 @@ const onSubmit = form.handleSubmit(async (values) => {
 			await store.dispatch('flashcards/updateFlashcard', values);
 		}
 	} else {
-		await store.dispatch('flashcards/addFlashcard', values);
-		form.resetField('frontSide');
-		form.resetField('backSide');
+		if (values.frontSide == '' || values.backSide == '') {
+			errorToast('Error: Frontside and backside are required');
+		} else {
+			await store.dispatch('flashcards/addFlashcard', values);
+			form.resetField('frontSide');
+			form.resetField('backSide');
+		}
 	}
+	loadingSave.value = false;
 });
 
 const onDelete = async () => {
+	loadingDelete.value = true;
 	const id = form.values.id;
 	if (id) {
 		await store.dispatch('flashcards/deleteFlashcard', id);
@@ -60,20 +69,21 @@ const onDelete = async () => {
 		form.resetField('frontSide');
 		form.resetField('backSide');
 	}
+	loadingDelete.value = false;
 };
 </script>
 
 <template>
 	<form @submit="onSubmit" class="w-full">
-		<Card class="w-full h-[100px] flex flex-row justify-start items-center gap-2 mb-2">
+		<Card class="w-full h-24 flex flex-row justify-start items-center gap-2 mb-2">
 			<FormField v-slot="{ componentField }" name="id">
 				<FormItem>
 					<FormControl>
-						<Input class="w-[70px] h-[80px] ml-2 text-center text-xl grow" type="text" disabled placeholder="ID" v-bind="componentField" />
+						<Input class="w-16 h-20 ml-2 text-center text-xl grow" type="text" disabled placeholder="ID" v-bind="componentField" />
 					</FormControl>
 				</FormItem>
 			</FormField>
-			<div class="flex flex-col gap-2 justify-between h-[80px] grow">
+			<div class="flex flex-col gap-2 justify-between h-20 grow">
 				<FormField v-slot="{ componentField }" name="frontSide">
 					<FormItem>
 						<FormControl>
@@ -89,12 +99,14 @@ const onDelete = async () => {
 					</FormItem>
 				</FormField>
 			</div>
-			<div class="flex flex-col gap-2 justify-between h-[80px] mr-2 max-w-[80px] grow">
-				<Button class="h-1/2 w-full px-2 py-0" variant="success" type="submit">
-					<Save :size="25" />
+			<div class="flex flex-col gap-2 justify-between h-20 mr-2 max-w-16 grow">
+				<Button variant="success" type="submit" :disabled="loadingSave">
+					<Loader2 :size="25" v-if="loadingSave" class="animate-spin" />
+					<Save :size="25" v-else />
 				</Button>
-				<Button class="h-1/2 w-full px-2 py-0" variant="destructive" type="button" @click="onDelete">
-					<Trash :size="25" />
+				<Button variant="destructive" type="button" @click="onDelete" :disabled="loadingDelete">
+					<Loader2 :size="25" v-if="loadingDelete" class="animate-spin" />
+					<Trash :size="25" v-else />
 				</Button>
 			</div>
 		</Card>

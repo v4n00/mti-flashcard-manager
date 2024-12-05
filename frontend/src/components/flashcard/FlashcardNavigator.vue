@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { FlashcardType } from '@/config/interfaces';
-import { Loader2, Shuffle } from 'lucide-vue-next';
+import { ArrowLeftRight, Loader2, Shuffle } from 'lucide-vue-next';
 import { defineProps, ref, watch } from 'vue';
 import Button from '../ui/button/Button.vue';
 import { Card } from '../ui/card';
@@ -63,13 +63,19 @@ const shuffleOrder = () => {
 					</CarouselItem>
 				</template>
 			</CarouselContent>
-			<CarouselPrevious />
-			<CarouselNext />
+			<CarouselPrevious class="md:flex hidden" />
+			<CarouselNext class="md:flex hidden" />
 		</Carousel>
-		<Button @click="shuffleOrder" :disabled="loading">
-			<Shuffle v-if="!loading" />
-			<Loader2 v-else class="animate-spin" />
-			Shuffle
-		</Button>
+		<div class="flex flex-row gap-3">
+			<Button @click="shuffleOrder" :disabled="loading">
+				<Shuffle v-if="!loading" />
+				<Loader2 v-else class="animate-spin" />
+				Shuffle
+			</Button>
+			<Card class="flex md:hidden text-muted-foreground/80 p-2 bg-muted h-9 items-center">
+				<ArrowLeftRight class="mr-2" />
+				<p>Swipe to navigate</p>
+			</Card>
+		</div>
 	</div>
 </template>
