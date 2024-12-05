@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
-		"start": "ts-node src/index.ts",
-		"dev": "nodemon --exec ts-node src/index.ts",
+		"start": "ts-node index.ts --node-env=production",
+		"dev": "nodemon --exec ts-node index.ts",
 		"seed": "ts-node src/config/seedDatabase.ts"
 	},
 	"dependencies": {
@@ -12,6 +12,7 @@
 		"bcrypt": "^5.1.1",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
+		"dotenv-flow": "^4.1.0",
 		"express": "^4.21.1",
 		"firebase": "^11.0.2",
 		"firebase-admin": "^13.0.1",

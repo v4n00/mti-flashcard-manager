@@ -1,7 +1,6 @@
-import 'dotenv/config';
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { userTokenExpiration } from '../config/const';
+import config from '../config/const';
 import { RequestWithToken } from '../models/requests';
 import { User } from '../models/user';
 
@@ -36,9 +35,9 @@ export function generateToken(user: User): string {
 		{
 			username: user.username,
 		},
-		process.env.JWT_KEY!,
+		config.jwtKey,
 		{
-			expiresIn: userTokenExpiration,
+			expiresIn: config.userTokenExpiration,
 		}
 	);
 }

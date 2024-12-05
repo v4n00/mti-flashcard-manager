@@ -2,7 +2,7 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { FlashcardType } from '@/config/interfaces';
 import { ArrowLeftRight, Loader2, Shuffle } from 'lucide-vue-next';
-import { defineProps, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import Button from '../ui/button/Button.vue';
 import { Card } from '../ui/card';
 import Flashcard from './Flashcard.vue';
