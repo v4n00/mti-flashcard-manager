@@ -150,8 +150,22 @@ FIREBASE_PRIVATE_KEY=
 3. Start the backend and frontend server:
 
 ```bash
-cd /backend
+cd backend
 npm run dev
 cd ../frontend
 npm run dev
 ```
+
+4. If hosting on Vercel, add:
+
+```bash
+VITE_SERVER_URL=
+```
+
+to frontend environment and
+
+```bash
+CLIENT_ADDRESS=
+```
+
+to backend environment.
